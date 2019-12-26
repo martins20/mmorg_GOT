@@ -12,13 +12,27 @@ JogoDAO.prototype.gerarParametros = function (usuario) {
                 temor: Math.floor(Math.random() * 1000),
                 sabedoria: Math.floor(Math.random() * 1000),
                 comercio: Math.floor(Math.random() * 1000),
-                margia: Math.floor(Math.random() * 1000),
+                magia: Math.floor(Math.random() * 1000),
             })
 
 			mongoclient.close()
 		})
 	})
 }
+
+JogoDAO.prototype.iniciarJogo = function (res, usuario, casa) {
+    this._connection.open( function (err, mongoclient) {
+		mongoclient.collection("jogo", function (err, collection) {
+			collection.find({usuario: usuario}).toArray(function (err, result) {
+                
+                res.render('jogo', {img_casa: casa, jogo: result[0]})
+				
+                mongoclient.close()
+            })
+		})
+	})
+}
+
 
 module.exports = function(){
 	return JogoDAO
