@@ -39,11 +39,31 @@
 						method: 'get',
 						success: function(data){
 							$('#acoes').html(data)
+
+							clearTimeout(timerId)
+							cronometro();
 						}
 					})
 				})
 
 			})
+
+			var timerId = null
+
+			function cronometro() {
+				$('.tempo_restante').each(function () {
+					var segundos = $(this).html()
+					var segundos_atuais = parseInt(segundos) - 1
+					
+					if(segundos_atuais < 0) {
+						window.location.href = '/jogo?msg=C'
+					} else {
+						$(this).html(segundos_atuais)
+					}
+				})
+
+				timerId = setTimeout(cronometro, 1000);
+			}
 		</script>
 
 	</head>
@@ -69,6 +89,18 @@
 			<% if(msg == 'B'){%>
 				<div class='alert alert-info' id='msg'>
 					<strong>Ação Realizada com Sucesso</strong>
+				</div>
+			<%}%>
+			
+			<% if(msg == 'C'){%>
+				<div class='alert alert-info' id='msg'>
+					<strong>Senhor, a atividade ordenada foi finalizada !</strong>
+				</div>
+			<%}%>
+
+			<% if(msg == 'D'){%>
+				<div class='alert alert-info' id='msg'>
+					<strong>Senhor, sua ordem foi revogada !</strong>
 				</div>
 			<%}%>
 	    	
@@ -118,12 +150,12 @@
 			
 				<div class="row">
 					<div class="col-sm-1">
-						<img src="images/outros/suditos.jpg" title="Aldeões" alt="Aldeões" id='btn_suditos' onclick='suditos()'/>
+						<img src="images/outros/suditos.jpg" title="Aldeões" alt="Aldeões" id='btn_suditos'/>
 						<span><%=jogo.suditos%></span>
 					</div>
 					
 					<div class="col-sm-1">
-						<img src="images/outros/pergaminho.jpg" title="Pergaminhos" alt="Pergaminhos" id='btn_pergaminhos' onclick='pergaminhos()'/>
+						<img src="images/outros/pergaminho.jpg" title="Pergaminhos" alt="Pergaminhos" id='btn_pergaminhos'/>
 					</div>
 					
 					<div class="col-sm-8"></div>
