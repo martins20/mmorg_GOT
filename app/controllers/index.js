@@ -20,6 +20,5 @@ module.exports.autenticar = function(application, req, res){
 	const UsuariosDAO = new application.app.models.UsuariosDAO(connection)
 
 	UsuariosDAO.autenticar(dadosForm, req, res)
-
-	//res.send('Tudo ok para criar a sessão')
+	
 }
