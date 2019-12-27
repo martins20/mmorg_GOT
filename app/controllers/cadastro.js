@@ -1,4 +1,10 @@
 module.exports.cadastro = function (application, req, res){
+	let msg = ''
+
+	if(req.query.msg != '') {
+		msg = req.query.msg
+	}
+	console.log(msg)
 	res.render('cadastro', {validacao: {}, dadosForm: {}})
 }
 
@@ -25,8 +31,5 @@ module.exports.cadastrar = function(application, req, res){
 	UsuariosDAO.inserirUsuario(dadosForm)
 	JogoDAO.gerarParametros(dadosForm.usuario)
 
-	//Geração dos parametros 
-
-
-	res.send('podemos cadastrar')
+	res.redirect('/?msg=E')
 }
